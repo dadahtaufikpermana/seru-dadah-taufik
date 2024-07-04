@@ -1,6 +1,6 @@
 import 'package:easy_splash_screen/easy_splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:seru_dadah_taufik/routes/app_pages.dart';
+import 'package:seru_dadah_taufik/routes/app_routes.dart';
 
 class PageSplashScreen extends StatelessWidget {
   const PageSplashScreen({Key? key}) : super(key: key);
@@ -11,7 +11,7 @@ class PageSplashScreen extends StatelessWidget {
       logo: const Image(
           image: AssetImage('assets/images/splash.png'), fit: BoxFit.cover),
       logoWidth: 150,
-      title: Text(
+      title: const Text(
         "Dadah Taufik Permana",
         style: TextStyle(
           fontSize: 28,
@@ -21,7 +21,7 @@ class PageSplashScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       loaderColor: Colors.blue.shade500,
       showLoader: true,
-      loadingText: Text("Loading"),
+      loadingText: const Text("Loading"),
       durationInSeconds: 3,
       navigator: Routes.REGISTER_CLAIM,
     );

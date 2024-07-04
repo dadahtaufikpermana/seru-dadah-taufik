@@ -1,12 +1,17 @@
-// Data dummy untuk wilayah
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../widget/row_information.dart';
+import 'controller.dart';
+
+
+//data dummy
 final Map<String, List<String>> provinsiKota = {
   'Jawa Barat': ['Bandung', 'Bogor'],
   'Jawa Tengah': ['Semarang', 'Solo'],
+  'Jawa Timur': ['Surabaya', 'Kediri'],
 };
 
 final Map<String, List<String>> kotaKecamatan = {
@@ -14,6 +19,8 @@ final Map<String, List<String>> kotaKecamatan = {
   'Bogor': ['Kecamatan C', 'Kecamatan D'],
   'Semarang': ['Kecamatan E', 'Kecamatan F'],
   'Solo': ['Kecamatan G', 'Kecamatan H'],
+  'Surabaya': ['Kecamatan G', 'Kecamatan H'],
+  'Kediri': ['Kecamatan G', 'Kecamatan H'],
 };
 
 final Map<String, List<String>> kecamatanKelurahan = {
@@ -28,6 +35,8 @@ final Map<String, List<String>> kecamatanKelurahan = {
 };
 
 class RegisterClaimController extends GetxController {
+  final Controller mainController = Get.put(Controller());
+
   // Text Editing Controllers
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
@@ -53,14 +62,12 @@ class RegisterClaimController extends GetxController {
     selectedProvinsi.value = provinsi;
     kotaList.value = provinsiKota[provinsi] ?? [];
     selectedKota.value = '';
-    updateKecamatan('');
   }
 
   void updateKecamatan(String kota) {
     selectedKota.value = kota;
     kecamatanList.value = kotaKecamatan[kota] ?? [];
     selectedKecamatan.value = '';
-    updateKelurahan('');
   }
 
   void updateKelurahan(String kecamatan) {
@@ -68,6 +75,25 @@ class RegisterClaimController extends GetxController {
     kelurahanList.value = kecamatanKelurahan[kecamatan] ?? [];
     selectedKelurahan.value = '';
   }
+
+  List<RowInformation> listRowInformationFormClaim = [
+    const RowInformation(title: 'No. Polisi', value: 'B 1234 EFG'),
+    const RowInformation(title: 'Nama Tertanggung', value: 'Fajar Priadi'),
+    const RowInformation(title: 'No. Polisi', value: 'VCL2007001'),
+    const RowInformation(title: 'Periode', value: '1 Juli 2020 - 30 Juli 2021'),
+    const RowInformation(
+        title: 'Nilai Pertanggungan', value: 'Rp. 120.000.000.-'),
+    const RowInformation(title: 'Buatan/Merk', value: 'Jepang/Honda'),
+    const RowInformation(title: 'Tahun Pembuatan', value: '2019'),
+    const RowInformation(title: 'No. Mesin', value: 'NHX120000'),
+    const RowInformation(title: 'No. Rangka', value: 'MCM24000'),
+  ];
+
+  List<RowInformation> listRowInformationFormSimStnk = [
+    const RowInformation(title: 'No. Polisi', value: 'B 1234 EFG'),
+    const RowInformation(title: 'Nama Tertanggung', value: 'Fajar Priadi'),
+    const RowInformation(title: 'No. Polisi', value: 'VCL2007001'),
+  ];
 
   Future<void> pickImage(Rx<XFile?> imageFile, ImageSource source) async {
     final ImagePicker _picker = ImagePicker();

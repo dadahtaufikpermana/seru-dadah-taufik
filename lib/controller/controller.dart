@@ -18,11 +18,10 @@ class CardItem {
 class Controller extends GetxController with SingleGetTickerProviderMixin {
   RxInt selectedPage = 0.obs;
   late TabController tabController;
-  final List<Tab> myTabs = const <Tab>[
-    Tab(text: 'Formulir Klaim'),
-    Tab(text: 'Foto SIM & STNK'),
-    Tab(text: 'Klaim Kerusakan\nKendaraan'),
-  ];
+
+
+  GlobalKey<FormState> formKey1 = GlobalKey<FormState>();
+  GlobalKey<FormState> formKey2 = GlobalKey<FormState>();
 
   var cardList = <CardItem>[
     CardItem(
@@ -54,5 +53,40 @@ class Controller extends GetxController with SingleGetTickerProviderMixin {
   void setSelectedPage(int index) {
     selectedPage(index);
     tabController.animateTo(index);
+  }
+
+  bool validateCurrentForm() {
+    switch (selectedPage.value) {
+      case 0:
+        return formKey1.currentState?.validate() ?? false;
+      case 1:
+        return formKey2.currentState?.validate() ?? false;
+      default:
+        return false;
+    }
+  }
+
+  void setSelectedPageWithoutValidation(int index) {
+    selectedPage(index);
+    tabController.animateTo(index);
+  }
+
+  void navigateToPage(int index) {
+    if (index > selectedPage.value) {
+      if (validateCurrentForm()) {
+        setSelectedPage(index);
+      } else {
+        Get.snackbar(
+          'Validation Error',
+          'Please fill out all fields.',
+          snackPosition: SnackPosition.BOTTOM,
+          duration: Duration(seconds: 3),
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    } else {
+      setSelectedPageWithoutValidation(index);
+    }
   }
 }

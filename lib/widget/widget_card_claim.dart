@@ -1,17 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:seru_dadah_taufik/controller/controller.dart';
 
-import '../constant/constant.dart';
-
 class WidgetCardClaim extends GetView<Controller> {
-  const WidgetCardClaim({
-    Key? key,
-    required this.label,
-  }) : super(key: key);
+  const WidgetCardClaim({super.key});
 
-  final String label;
 
   @override
   Widget build(BuildContext context) {
@@ -19,20 +12,24 @@ class WidgetCardClaim extends GetView<Controller> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.only(top: 8.w, left: 8.w),
-          child: Text(
-            label,
-            style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 12.sp,
-                color: AppColor.darkBlue),
-          ),
+          padding: const EdgeInsets.only(top: 8, left: 8),
+          child: Obx(() {
+            final selectedText = controller.cardList[controller.selectedPage.value].text;
+            return Text(
+              selectedText,
+              style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 12,
+                  color: Colors.blue),
+            );
+          }),
         ),
-        SizedBox(
-          height: 16.h,
+        const SizedBox(
+          height: 16,
         ),
         Container(
-          height: 55.h,
+          height: 80,
+          padding: EdgeInsets.symmetric(horizontal: 15),
           child: Obx(() {
             return ListView.builder(
               padding: EdgeInsets.zero,
@@ -40,56 +37,52 @@ class WidgetCardClaim extends GetView<Controller> {
               itemCount: controller.cardList.length,
               itemBuilder: (context, index) {
                 final cardData = controller.cardList[index];
-                return GestureDetector(
-                  onTap: () => controller.setSelectedPage(index),
-                  child: Container(
-                    width: 190.w,
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6.r),
+                return Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: GestureDetector(
+                    onTap: () => controller.navigateToPage(index),
+                    child: Container(
+                      height: 80,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey, width: 0.2),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(8),
+                        ),
+                        color: Colors.white,
                       ),
                       child: Row(
                         children: [
-                          Container(
-                            decoration: ShapeDecoration(
-                              color: cardData.color,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(6.r),
-                                  bottomLeft: Radius.circular(6.r),
+                          Row(
+                            children: [
+                              Container(
+                                width: 12,
+                                decoration: BoxDecoration(
+                                  color: cardData.color,
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(8),
+                                    bottomLeft: Radius.circular(8),
+                                  ),
                                 ),
                               ),
-                            ),
-                            width: 10.w,
-                          ),
-                          Expanded(
-                            child: ListTile(
-                              contentPadding: EdgeInsets.symmetric(
-                                  vertical: 0, horizontal: 0.w),
-                              leading: Container(
-                                width: 46.w,
-                                alignment: Alignment.center,
-                                color: cardData.colorBackground,
+                              Container(
+                                height: 80,
+                                width: 100,
+                                decoration: BoxDecoration(
+                                  color: cardData.colorBackground,
+                                ),
                                 child: Icon(
                                   cardData.icon,
-                                  color: AppColor.primaryColor,
-                                  size: 24.sp,
+                                  size: 45,
                                 ),
                               ),
-                              title: Text(
-                                cardData.text,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 10.sp,
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.justify,
-                              ),
-                            ),
+                            ],
                           ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: Text(
+                              cardData.text,
+                            ),
+                          )
                         ],
                       ),
                     ),

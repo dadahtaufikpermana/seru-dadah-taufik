@@ -3,30 +3,29 @@ import 'package:flutter/material.dart';
 class TextInputWidget extends StatelessWidget {
   final String label;
   final TextEditingController controller;
-  final double? height;
-  final int? maxLines;
+  final int maxLines;
+  final double height;
+  final FormFieldValidator<String>? validator;
 
-  const TextInputWidget({
-    Key? key,
+  TextInputWidget({
     required this.label,
     required this.controller,
-    this.height = 60,
-    this.maxLines = 1
-  }) : super(key: key);
+    this.maxLines = 1,
+    this.height = 50,
+    this.validator,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      height: height,
-      child: TextField(
-        controller: controller,
-        maxLines: maxLines,
-        decoration: InputDecoration(
-          hintText: label,
-          border: UnderlineInputBorder(),
-        ),
+    return TextFormField(
+      controller: controller,
+      maxLines: maxLines,
+      decoration: InputDecoration(
+        hintText: label,
+        hintStyle: const TextStyle(color: Colors.grey),
       ),
+      validator: validator,
     );
   }
 }
+

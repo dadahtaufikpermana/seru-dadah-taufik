@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../widget/custom_tabbar.dart';
 import '../widget/widget_card_claim.dart';
@@ -12,7 +11,7 @@ class PageRegisterClaim extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20.h),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) {
             return [
@@ -27,13 +26,11 @@ class PageRegisterClaim extends StatelessWidget {
               ),
             ];
           },
-          body: Column(
+          body: const Column(
             children: [
-              const WidgetCardClaim(
-                label: "Registrasi Klaim",
-              ),
+              WidgetCardClaim(),
               SizedBox(
-                height: 20.h,
+                height: 20,
               ),
               Expanded(
                 child: CustomTabbar(),
